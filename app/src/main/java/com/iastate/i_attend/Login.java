@@ -22,12 +22,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
     private static final String TAG = "SignInActivity";
 
     private GoogleApiClient mGoogleApiClient;
+    private UsersDataSource dataSource;
     private TextView mStatusTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        dataSource = UsersDataSource.getDsInstance(this);
+        dataSource.open();
 
         mStatusTextView = (TextView) findViewById(R.id.status);
 
@@ -74,11 +78,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-          //  updateUI(true);
-        } else {
-            // Signed out, show unauthenticated UI.
-          //  updateUI(false);
+            //Query data base see if acct exist.
+            //if exist: Make intent to classes list
+            //Else: Make intent to choose User Type
+            String type = dataSource.getUserType(acct.getDisplayName());
+
+
+            if(type == "instructor"){
+
+            } else if (type == "student"){
+
+            } else {
+                Intent i = new Intent(this, UserType.class);
+                i.putExtra("username", acct.getDisplayName());
+                startActivity(i);
+            }
         }
     }
 
@@ -90,5 +104,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        dataSource.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        dataSource.close();
+        super.onPause();
     }
 }
