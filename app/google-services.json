@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "966317879577",
+    "project_id": "firebase-i-attend"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966317879577:android:97c2752ff426744b",
+        "android_client_info": {
+          "package_name": "com.iastate.i_attend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966317879577-o0pbp0ij56heg3ugbu9hpu0gnmbp6jum.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iastate.i_attend",
+            "certificate_hash": "A6F56D1D218743827C58C5F5AEA929B45B19E56F"
+          }
+        },
+        {
+          "client_id": "966317879577-rar33p5psm3n3qjru5h2ft5a2fpkeum2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe3WCd5Mv_cVRSuJIHrpp_3XCZinze3Q8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
