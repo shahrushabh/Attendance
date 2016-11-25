@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,8 +30,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
         dataSource = UsersDataSource.getDsInstance(this);
         dataSource.open();
-
-        mStatusTextView = (TextView) findViewById(R.id.status);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
