@@ -30,7 +30,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String usersTable = "create table " + TABLE_USERS + " ( " + COLUMN_ID + " INTEGER PRIMARY KEY AUTO_INCREMENT, " + COLUMN_USERNAME + " VARCHAR(100) NOT NULL, " + COLUMN_USER_TYPE + " VARCHAR(10) NOT NULL)";
+        String usersTable = "create table " + TABLE_USERS + " ( " + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USERNAME + " VARCHAR(100) NOT NULL, " + COLUMN_USER_TYPE + " VARCHAR(10) NOT NULL)";
         sqLiteDatabase.execSQL(usersTable);
     }
 

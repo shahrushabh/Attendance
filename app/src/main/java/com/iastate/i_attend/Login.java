@@ -82,7 +82,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
             //if exist: Make intent to classes list
             //Else: Make intent to choose User Type
             String type = dataSource.getUserType(acct.getDisplayName());
-
+            Log.w("Type", type);
 
             if(type == "instructor"){
 
@@ -106,15 +106,4 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
     }
 
-    @Override
-    protected void onResume() {
-        dataSource.open();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        dataSource.close();
-        super.onPause();
-    }
 }

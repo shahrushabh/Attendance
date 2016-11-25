@@ -58,7 +58,9 @@ public class UsersDataSource {
     public String getUserType(String username){
         Cursor cursor = database.query(SQLiteHelper.TABLE_USERS, new String[] {SQLiteHelper.COLUMN_USER_TYPE}, "usertype=?", new String[] {username}, null, null, null);
         cursor.moveToFirst();
-        String usertype = cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_USER_TYPE));
+        String usertype = "";
+        if(cursor.getCount() != 0)
+                cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_USER_TYPE));
         return usertype;
     }
 
