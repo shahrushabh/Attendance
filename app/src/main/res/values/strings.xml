@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">I-Attend</string>
     <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="title_activity_class_list">ClassList</string>
 </resources>
