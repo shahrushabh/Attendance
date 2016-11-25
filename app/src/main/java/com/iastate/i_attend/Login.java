@@ -80,10 +80,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
             String type = dataSource.getUserType(acct.getDisplayName());
             Log.d("Type", type);
 
-            if(type == "instructor"){
-
-            } else if (type == "student"){
-
+            if(type.equals(UserType.TYPE_INSTRUCTOR)){
+//TODO
+                Log.d(TAG, "You are instructor");
+            } else if (type.equals(UserType.TYPE_STUDENT)){
+//TODO
+                Log.d(TAG, "You are student");
             } else {
                 Intent i = new Intent(this, UserType.class);
                 i.putExtra("username", acct.getDisplayName());
