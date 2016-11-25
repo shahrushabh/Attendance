@@ -1,5 +1,6 @@
 package com.iastate.i_attend;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,9 +8,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +46,17 @@ public class ClassList extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //TODO: Update the action to lead the user to class detail (Attendance Activity)
+                Context context = getApplicationContext();
+                CharSequence text = "Clicked item " + i;
+                int duration = Toast.LENGTH_SHORT;
+                Toast.makeText(context, text, duration).show();
+            }
+        });
     }
 
     @Override
@@ -56,4 +70,5 @@ public class ClassList extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, values);
         listView.setAdapter(adapter);
     }
+
 }
