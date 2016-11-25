@@ -23,7 +23,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
     private GoogleApiClient mGoogleApiClient;
     private UsersDataSource dataSource;
-    private TextView mStatusTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +81,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
             //if exist: Make intent to classes list
             //Else: Make intent to choose User Type
             String type = dataSource.getUserType(acct.getDisplayName());
-            Log.w("Type", type);
+            Log.d("Type", type);
 
             if(type == "instructor"){
 
