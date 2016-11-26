@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -23,7 +22,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
     private GoogleApiClient mGoogleApiClient;
     private UsersDataSource dataSource;
-    private TextView mStatusTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +30,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
         dataSource = UsersDataSource.getDsInstance(this);
         dataSource.open();
-
-        mStatusTextView = (TextView) findViewById(R.id.status);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -82,12 +78,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
             //if exist: Make intent to classes list
             //Else: Make intent to choose User Type
             String type = dataSource.getUserType(acct.getDisplayName());
-            Log.w("Type", type);
+            Log.d("Type", type);
 
-            if(type == "instructor"){
-
-            } else if (type == "student"){
-
+            if(type.equals(UserType.TYPE_INSTRUCTOR)){
+                //TODO: Lead user to there list view
+                Log.d(TAG, "You are instructor");
+                Intent i = new Intent(this, ClassList.class);
+                i.putExtra("username", acct.getDisplayName());
+                i.putExtra("type", type);
+                startActivity(i);
+            } else if (type.equals(UserType.TYPE_STUDENT)){
+                //TODO: Lead user to there list view
+                Log.d(TAG, "You are student");
+                Intent i = new Intent(this, ClassList.class);
+                i.putExtra("username", acct.getDisplayName());
+                i.putExtra("type", type);
+                startActivity(i);
             } else {
                 Intent i = new Intent(this, UserType.class);
                 i.putExtra("username", acct.getDisplayName());
@@ -106,4 +112,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dataSource.open();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onPause();
+        dataSource.close();
+    }
 }
