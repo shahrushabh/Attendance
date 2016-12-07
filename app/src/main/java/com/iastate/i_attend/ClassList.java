@@ -21,6 +21,7 @@ public class ClassList extends AppCompatActivity {
 
     private String username;
     private String type;
+    private String email;
     private TextView textView;
     private ListView listView;
 
@@ -34,6 +35,7 @@ public class ClassList extends AppCompatActivity {
         Intent i = getIntent();
         username = i.getStringExtra("username");
         type = i.getStringExtra("type");
+        email = i.getStringExtra("email");
         textView = (TextView) findViewById(R.id.userStatus);
         textView.setText(username + ": " + type);
         listView = (ListView) findViewById(R.id.listView);

@@ -12,6 +12,7 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
     public static final String TYPE_STUDENT = "student";
 
     String username;
+    String email;
     private UsersDataSource dataSource;
 
     @Override
@@ -24,6 +25,7 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
 
         Intent i = getIntent();
         username = i.getStringExtra("username");
+        email = i.getStringExtra("email");
         Log.d("Username", username);
 
         findViewById(R.id.instructor).setOnClickListener(this);
@@ -33,18 +35,27 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
 
+        Intent i = new Intent(this, ClassList.class);
+        i.putExtra("username", username);
+        i.putExtra("email", email);
+
         if (view.getId() == R.id.instructor){
             //Save user type as instructor to db
-            User u = dataSource.createUser(username, TYPE_INSTRUCTOR);
+            User u = dataSource.createUser(username, TYPE_INSTRUCTOR, email);
+            i.putExtra("type", TYPE_INSTRUCTOR);
             Log.d("Click", TYPE_INSTRUCTOR);
             Log.d("New user", u.getUserName() + " " + u.getUserType());
+            startActivity(i);
 
         } else if (view.getId() == R.id.student){
             //Save user type as student to db
-            User u = dataSource.createUser(username, TYPE_STUDENT);
+            User u = dataSource.createUser(username, TYPE_STUDENT, email);
+            i.putExtra("type", TYPE_STUDENT);
             Log.d("Click", TYPE_STUDENT);
             Log.d("New user", u.getUserName() + " " + u.getUserType());
+            startActivity(i);
         }
+
     }
 
 }

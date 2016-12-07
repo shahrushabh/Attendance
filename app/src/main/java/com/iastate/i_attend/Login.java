@@ -85,6 +85,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
                 Log.d(TAG, "You are instructor");
                 Intent i = new Intent(this, ClassList.class);
                 i.putExtra("username", acct.getDisplayName());
+                i.putExtra("email", acct.getEmail());
                 i.putExtra("type", type);
                 startActivity(i);
             } else if (type.equals(UserType.TYPE_STUDENT)){
@@ -92,11 +93,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
                 Log.d(TAG, "You are student");
                 Intent i = new Intent(this, ClassList.class);
                 i.putExtra("username", acct.getDisplayName());
+                i.putExtra("email", acct.getEmail());
                 i.putExtra("type", type);
                 startActivity(i);
             } else {
                 Intent i = new Intent(this, UserType.class);
                 i.putExtra("username", acct.getDisplayName());
+                i.putExtra("email", acct.getEmail());
                 startActivity(i);
             }
         }
@@ -121,6 +124,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
     @Override
     protected void onStop() {
         super.onPause();
-        dataSource.close();
+//        dataSource.close();
     }
 }
