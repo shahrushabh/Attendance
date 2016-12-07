@@ -9,11 +9,19 @@ public class User {
     private long id;
     private String userName;
     private String userType;
+    private String userEmail;
 
     public User(long id, String name, String type){
         this.id = id;
         userName = name;
         userType = type;
+    }
+
+    public User(long id, String name, String type, String email){
+        this.id = id;
+        userName = name;
+        userType = type;
+        userEmail = email;
     }
 
     public String getUserName(){
@@ -22,6 +30,10 @@ public class User {
 
     public String getUserType(){
         return userType;
+    }
+
+    public String getUserEmail(){
+        return userEmail;
     }
 
 }

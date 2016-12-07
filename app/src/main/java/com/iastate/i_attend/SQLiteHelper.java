@@ -16,6 +16,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     //Table Columns
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_USERNAME = "username";
+    public static final String COLUMN_USEREMAIL = "useremail";
     public static final String COLUMN_USER_TYPE = "usertype";
 
     //Database Name
@@ -30,7 +31,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String usersTable = "create table " + TABLE_USERS + " ( " + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USERNAME + " VARCHAR(100) NOT NULL, " + COLUMN_USER_TYPE + " VARCHAR(10) NOT NULL)";
+        String usersTable = "create table " + TABLE_USERS + " ( " + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USERNAME + " VARCHAR(30) NOT NULL, " + COLUMN_USEREMAIL + " VARCHAR(20) " + COLUMN_USER_TYPE + " VARCHAR(12) NOT NULL)";
         sqLiteDatabase.execSQL(usersTable);
     }
 
