@@ -1,5 +1,7 @@
 package com.iastate.i_attend;
 
+import java.util.ArrayList;
+
 /**
  * Created by Yuxiang Chen on 2016/11/24.
  */
@@ -10,6 +12,7 @@ public class User {
     private String userName;
     private String userType;
     private String userEmail;
+    private ArrayList<Course> classes;
 
     public User(long id, String name, String type){
         this.id = id;
@@ -22,6 +25,14 @@ public class User {
         userName = name;
         userType = type;
         userEmail = email;
+    }
+
+    public User(long id, String name, String type, String email, ArrayList<Course> classes){
+        this.id = id;
+        userName = name;
+        userType = type;
+        userEmail = email;
+        this.classes = classes;
     }
 
     public String getUserName(){
