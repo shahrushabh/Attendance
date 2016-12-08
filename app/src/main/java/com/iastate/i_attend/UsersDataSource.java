@@ -39,11 +39,11 @@ public class UsersDataSource {
 
     public User createUser(String userName, String userType, String email){
         ContentValues newUserContent = new ContentValues();
-        newUserContent.put(dbHelper.COLUMN_USERNAME, userName);
-        newUserContent.put(dbHelper.COLUMN_USER_TYPE, userType);
-        newUserContent.put(dbHelper.COLUMN_USEREMAIL, email);
+        newUserContent.put(SQLiteHelper.COLUMN_USERNAME, userName);
+        newUserContent.put(SQLiteHelper.COLUMN_USER_TYPE, userType);
+        newUserContent.put(SQLiteHelper.COLUMN_USEREMAIL, email);
 
-        long id = database.insert(dbHelper.TABLE_USERS, null, newUserContent);
+        long id = database.insert(SQLiteHelper.TABLE_USERS, null, newUserContent);
 
         User newUser = getUser(id);
         return newUser;
@@ -53,8 +53,7 @@ public class UsersDataSource {
         String[] id_string = {Long.toString(id)};
         Cursor cursor = database.query(SQLiteHelper.TABLE_USERS, new String[] {SQLiteHelper.COLUMN_ID, SQLiteHelper.COLUMN_USERNAME, SQLiteHelper.COLUMN_USER_TYPE, SQLiteHelper.COLUMN_USEREMAIL}, "_id=?", id_string, null, null, null);
         cursor.moveToFirst();
-        User toReturn = cursorToUser(cursor);
-        return toReturn;
+        return cursorToUser(cursor);
     }
 
     public String getUserType(String username){
@@ -63,6 +62,7 @@ public class UsersDataSource {
         String usertype = "";
         if(cursor.getCount() != 0)
                 usertype = cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_USER_TYPE));
+        cursor.close();
         return usertype;
     }
 
@@ -71,6 +71,4 @@ public class UsersDataSource {
         User user = new User(cursor.getLong(cursor.getColumnIndex(SQLiteHelper.COLUMN_ID)), cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_USERNAME)), cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_USER_TYPE)), cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_USEREMAIL)));
         return user;
     }
-
-
 }
