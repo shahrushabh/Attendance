@@ -45,28 +45,35 @@ public class MyEndpoint {
     /**
      * A simple endpoint method that takes a name and says Hi back
      */
-    @ApiMethod(name = "getCourse")
-    public Course getCourse() {
+    @ApiMethod(name = "get_course",
+                path = "get_course",
+                httpMethod = ApiMethod.HttpMethod.GET)
+    public Course get_course() {
         return new Course(123,"Systems Class");
     }
 
     /**
      * A simple endpoint method that takes a name and says Hi back
      */
-    @ApiMethod(name = "getUser")
-    public Entity getUser(@Named("email") String email) {
-        DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-        Query userQuery = new Query("User");
-//        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, email);
-        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, "rvshah@iastate.edu");
-        userQuery.setFilter(emailFilter);
-        return dataStore.prepare(userQuery).asSingleEntity();
+    @ApiMethod(name = "getUser",
+            path = "getUser",
+            httpMethod = ApiMethod.HttpMethod.POST)
+    public User getUser(@Named("email") String email) {
+//        DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
+//        Query userQuery = new Query("User");
+////        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, email);
+//        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, "rvshah@iastate.edu");
+//        userQuery.setFilter(emailFilter);
+//        return dataStore.prepare(userQuery).asSingleEntity();
+        return new User(123, "Rushabh", "Student", "rvshah@iastate.edu");
     }
 
     /**
      * A simple endpoint method that takes a name and says Hi back
      */
-    @ApiMethod(name = "addUser")
+    @ApiMethod(name = "addUser",
+            path = "addUser",
+            httpMethod = ApiMethod.HttpMethod.POST)
     public void addUser(User user) {
         DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
         Entity newUser = new Entity("User", user.getUserEmail());
