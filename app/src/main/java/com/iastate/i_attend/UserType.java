@@ -1,10 +1,22 @@
 package com.iastate.i_attend;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.iastate.i_attend.backend.myApi.MyApi;
+
+import java.io.IOException;
 
 public class UserType extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,7 +46,6 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-
         Intent i = new Intent(this, ClassList.class);
         i.putExtra("username", username);
         i.putExtra("email", email);
@@ -57,5 +68,4 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
         }
 
     }
-
 }
