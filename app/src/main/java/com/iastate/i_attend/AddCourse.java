@@ -170,7 +170,8 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
             String name = params[0].second;
 
             try {
-                return myApiService.sayHello(name).execute().getData();//getUser("rvshah@iastate.edu").execute().getKind();
+                return myApiService.sayHello().execute().getData();//getUser("rvshah@iastate.edu").execute().getKind();
+//                return myApiService.getCourse().execute().getCourseName();//getUser("rvshah@iastate.edu").execute().getKind();
             } catch (IOException e) {
                 return e.getMessage();
             }

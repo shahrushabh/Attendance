@@ -33,10 +33,12 @@ public class MyEndpoint {
     /**
      * A simple endpoint method that takes a name and says Hi back
      */
-    @ApiMethod(name = "sayHello")
-    public MyBean sayHello(@Named("name") String name) {
+    @ApiMethod(name = "sayHello",
+                path = "sayHello",
+                httpMethod = ApiMethod.HttpMethod.GET)
+    public MyBean sayHello() {
         MyBean response = new MyBean();
-        response.setData("Hi, " + name);
+        response.setData("Hi, Rushabh!");
         return response;
     }
 
