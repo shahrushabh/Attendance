@@ -20,7 +20,7 @@ import javax.inject.Named;
  * An endpoint class we are exposing
  */
 @Api(
-        name = "myApi",
+        name = "iAttend",
         version = "v1",
         namespace = @ApiNamespace(
                 ownerDomain = "backend.i_attend.iastate.com",
@@ -33,12 +33,19 @@ public class MyEndpoint {
     /**
      * A simple endpoint method that takes a name and says Hi back
      */
-    @ApiMethod(name = "sayHi")
-    public MyBean sayHi(@Named("name") String name) {
+    @ApiMethod(name = "sayHello")
+    public MyBean sayHello(@Named("name") String name) {
         MyBean response = new MyBean();
         response.setData("Hi, " + name);
-
         return response;
+    }
+
+    /**
+     * A simple endpoint method that takes a name and says Hi back
+     */
+    @ApiMethod(name = "getCourse")
+    public Course getCourse() {
+        return new Course(123,"Systems Class");
     }
 
     /**

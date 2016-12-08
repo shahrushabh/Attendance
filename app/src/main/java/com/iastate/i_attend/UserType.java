@@ -14,7 +14,7 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-import com.iastate.i_attend.backend.myApi.MyApi;
+import com.iastate.i_attend.backend.iAttend.*;
 
 import java.io.IOException;
 
