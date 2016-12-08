@@ -17,6 +17,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+
 public class Login extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     private static final int RC_SIGN_IN = 9001;
@@ -34,6 +35,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
         sharedPref = getSharedPreferences("MyPreference", Context.MODE_PRIVATE);
         if(sharedPref.getBoolean("auto_login", false)){
             Intent intent = new Intent(this, ClassList.class);
+            intent.putExtra("username", sharedPref.getString("username", "error"));
+            intent.putExtra("email", sharedPref.getString("email", "error"));
+            intent.putExtra("type", sharedPref.getString("type", "error"));
             startActivity(intent);
         }
 
@@ -88,7 +92,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
             //if exist: Make intent to classes list
             //Else: Make intent to choose User Type
             editor.putBoolean("auto_login", true);
-            editor.apply();
 
             String type = dataSource.getUserType(acct.getDisplayName());
             Log.d("Type", type);
@@ -100,6 +103,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
                 i.putExtra("username", acct.getDisplayName());
                 i.putExtra("email", acct.getEmail());
                 i.putExtra("type", type);
+
+                editor.putString("username", acct.getDisplayName());
+                editor.putString("email", acct.getEmail());
+                editor.putString("type", type);
+
                 startActivity(i);
             } else if (type.equals(UserType.TYPE_STUDENT)){
                 //TODO: Lead user to there list view
@@ -108,17 +116,27 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
                 i.putExtra("username", acct.getDisplayName());
                 i.putExtra("email", acct.getEmail());
                 i.putExtra("type", type);
+
+                editor.putString("username", acct.getDisplayName());
+                editor.putString("email", acct.getEmail());
+                editor.putString("type", type);
+
                 startActivity(i);
             } else {
                 Intent i = new Intent(this, UserType.class);
                 i.putExtra("username", acct.getDisplayName());
                 i.putExtra("email", acct.getEmail());
+
+                editor.putString("username", acct.getDisplayName());
+                editor.putString("email", acct.getEmail());
+                editor.putString("type", type);
+
                 startActivity(i);
             }
         } else{
             editor.putBoolean("auto_login", false);
-            editor.apply();
         }
+        editor.apply();
 
     }
 
