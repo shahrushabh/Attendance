@@ -61,11 +61,11 @@ public class MyEndpoint {
     public User getUser(@Named("email") String email) {
 //        DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 //        Query userQuery = new Query("User");
-////        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, email);
-//        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, "rvshah@iastate.edu");
+//        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, email);
+////        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, "rvshah@iastate.edu");
 //        userQuery.setFilter(emailFilter);
 //        return dataStore.prepare(userQuery).asSingleEntity();
-        return new User(123, "Rushabh", "Student", "rvshah@iastate.edu");
+        return new User(123, "Rushabh", "Student", email);
     }
 
     /**

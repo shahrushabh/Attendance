@@ -2,6 +2,7 @@ package com.iastate.i_attend;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -149,20 +150,6 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
             if(myApiService == null) {  // Only do this once
                 IAttend.Builder builder = new IAttend.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                         .setRootUrl("https://i-attend-1.appspot.com/_ah/api/");
-//                IAttend.Builder builder = new IAttend.Builder(AndroidHttp.newCompatibleTransport(),
-//                        new AndroidJsonFactory(), null)
-//                        // options for running against local devappserver
-//                        // - 10.0.2.2 is localhost's IP address in Android emulator
-//                        // - turn off compression when running against local devappserver
-//                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
-//                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-//                            @Override
-//                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-//                                abstractGoogleClientRequest.setDisableGZipContent(true);
-//                            }
-//                        });
-                // end options for devappserver
-
                 myApiService = builder.build();
             }
 
@@ -171,7 +158,13 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
 
             try {
 //                return myApiService.sayHello().execute().getData();//getUser("rvshah@iastate.edu").execute().getKind();
-                return myApiService.getUser("rvshah@iastate.edu").execute().getUserName();//get_course().execute().getCourseName();
+                com.iastate.i_attend.backend.iAttend.model.User user = myApiService.getUser("rvshah@iastate.edu").execute();
+                Log.d("Testing ", "It Works");
+//                Log.d("Name is ", user.getUserName());
+//                Log.d("Email is ", user.getUserEmail());
+//                Log.d("Type is ", user.getUserType());
+//                return myApiService.getUser("rvshah@iastate.edu").execute().getUserType();//get_course().execute().getCourseName();
+                return myApiService.sayHello().execute().getData();//get_course().execute().getCourseName();
             } catch (IOException e) {
                 return e.getMessage();
             }
