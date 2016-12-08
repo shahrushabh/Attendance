@@ -1,6 +1,8 @@
 package com.iastate.i_attend;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+
 public class Login extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     private static final int RC_SIGN_IN = 9001;
@@ -22,11 +25,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
     private GoogleApiClient mGoogleApiClient;
     private UsersDataSource dataSource;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        sharedPref = getSharedPreferences("MyPreference", Context.MODE_PRIVATE);
+        if(sharedPref.getBoolean("auto_login", false)){
+            Intent intent = new Intent(this, ClassList.class);
+            intent.putExtra("username", sharedPref.getString("username", "error"));
+            intent.putExtra("email", sharedPref.getString("email", "error"));
+            intent.putExtra("type", sharedPref.getString("type", "error"));
+            startActivity(intent);
+        }
 
         dataSource = UsersDataSource.getDsInstance(this);
         dataSource.open();
@@ -71,12 +84,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        SharedPreferences.Editor editor = sharedPref.edit();
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             //Query data base see if acct exist.
             //if exist: Make intent to classes list
             //Else: Make intent to choose User Type
+            editor.putBoolean("auto_login", true);
+
             String type = dataSource.getUserType(acct.getDisplayName());
             Log.d("Type", type);
 
@@ -87,6 +103,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
                 i.putExtra("username", acct.getDisplayName());
                 i.putExtra("email", acct.getEmail());
                 i.putExtra("type", type);
+
+                editor.putString("username", acct.getDisplayName());
+                editor.putString("email", acct.getEmail());
+                editor.putString("type", type);
+
                 startActivity(i);
             } else if (type.equals(UserType.TYPE_STUDENT)){
                 //TODO: Lead user to there list view
@@ -95,14 +116,28 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
                 i.putExtra("username", acct.getDisplayName());
                 i.putExtra("email", acct.getEmail());
                 i.putExtra("type", type);
+
+                editor.putString("username", acct.getDisplayName());
+                editor.putString("email", acct.getEmail());
+                editor.putString("type", type);
+
                 startActivity(i);
             } else {
                 Intent i = new Intent(this, UserType.class);
                 i.putExtra("username", acct.getDisplayName());
                 i.putExtra("email", acct.getEmail());
+
+                editor.putString("username", acct.getDisplayName());
+                editor.putString("email", acct.getEmail());
+                editor.putString("type", type);
+
                 startActivity(i);
             }
+        } else{
+            editor.putBoolean("auto_login", false);
         }
+        editor.apply();
+
     }
 
     private void signIn(){

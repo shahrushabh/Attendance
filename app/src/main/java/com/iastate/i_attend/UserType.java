@@ -2,11 +2,10 @@ package com.iastate.i_attend;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 
 public class UserType extends AppCompatActivity implements View.OnClickListener {
@@ -17,11 +16,14 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
     String username;
     String email;
     private UsersDataSource dataSource;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_type_chooser);
+
+        sharedPref = getSharedPreferences("MyPreference", Context.MODE_PRIVATE);
 
         dataSource = UsersDataSource.getDsInstance(this);
         dataSource.open();
@@ -41,10 +43,13 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
         i.putExtra("username", username);
         i.putExtra("email", email);
 
+        SharedPreferences.Editor editor = sharedPref.edit();
+
         if (view.getId() == R.id.instructor){
             //Save user type as instructor to db
             User u = dataSource.createUser(username, TYPE_INSTRUCTOR, email);
             i.putExtra("type", TYPE_INSTRUCTOR);
+            editor.putString("type", TYPE_INSTRUCTOR);
             Log.d("Click", TYPE_INSTRUCTOR);
             Log.d("New user", u.getUserName() + " " + u.getUserType());
             startActivity(i);
@@ -53,10 +58,13 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
             //Save user type as student to db
             User u = dataSource.createUser(username, TYPE_STUDENT, email);
             i.putExtra("type", TYPE_STUDENT);
+            editor.putString("type", TYPE_STUDENT);
             Log.d("Click", TYPE_STUDENT);
             Log.d("New user", u.getUserName() + " " + u.getUserType());
             startActivity(i);
         }
+
+        editor.apply();
 
     }
 }

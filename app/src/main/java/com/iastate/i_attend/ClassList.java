@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -41,16 +40,27 @@ public class ClassList extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(ClassList.this, AddCourse.class);
-                startActivity(i);
+        if (type.equals(UserType.TYPE_INSTRUCTOR)){
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(ClassList.this, AddCourse.class);
+                    startActivity(i);
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
+                }
+            });
+        } else if (type.equals(UserType.TYPE_STUDENT)){
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(ClassList.this, CourseReg.class);
+                    startActivity(i);
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+            });
+        }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //TODO: Update the action to lead the user to class detail (Attendance Activity)
@@ -58,6 +68,14 @@ public class ClassList extends AppCompatActivity {
                 CharSequence text = "Clicked item " + i;
                 int duration = Toast.LENGTH_SHORT;
                 Toast.makeText(context, text, duration).show();
+
+                Intent intent = new Intent(ClassList.this, AttendanceActivity.class);
+                intent.putExtra("courseID", i);
+                intent.putExtra("username", username);
+                intent.putExtra("type", type);
+                intent.putExtra("email", email);
+                startActivity(intent);
+
             }
         });
     }
