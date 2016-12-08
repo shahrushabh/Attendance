@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/endpoints-backend/endpoints-backend.iml" filepath="$PROJECT_DIR$/endpoints-backend/endpoints-backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/i-attend.iml" filepath="$PROJECT_DIR$/i-attend.iml" />
     </modules>
   </component>

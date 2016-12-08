@@ -34,7 +34,6 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-
         Intent i = new Intent(this, ClassList.class);
         i.putExtra("username", username);
         i.putExtra("email", email);
@@ -57,5 +56,4 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
         }
 
     }
-
 }
