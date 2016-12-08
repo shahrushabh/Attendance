@@ -40,16 +40,27 @@ public class ClassList extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(ClassList.this, AddCourse.class);
-                startActivity(i);
+        if (type.equals(UserType.TYPE_INSTRUCTOR)){
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(ClassList.this, AddCourse.class);
+                    startActivity(i);
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
+                }
+            });
+        } else if (type.equals(UserType.TYPE_STUDENT)){
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(ClassList.this, CourseReg.class);
+                    startActivity(i);
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+            });
+        }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //TODO: Update the action to lead the user to class detail (Attendance Activity)
