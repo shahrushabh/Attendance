@@ -57,6 +57,11 @@ public class ClassList extends AppCompatActivity {
                 CharSequence text = "Clicked item " + i;
                 int duration = Toast.LENGTH_SHORT;
                 Toast.makeText(context, text, duration).show();
+
+                Intent intent = new Intent(ClassList.this, AttendanceActivity.class);
+                intent.putExtra("courseID", i);
+                startActivity(intent);
+
             }
         });
     }
