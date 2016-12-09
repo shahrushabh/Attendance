@@ -20,6 +20,7 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
     String type;
     LocationManager locationManager;
     Button b;
+    Double lat, lon;
 
     @Override
     @TargetApi(Build.VERSION_CODES.M)
@@ -29,6 +30,8 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
         Intent i = getIntent();
         courseID = i.getIntExtra("courseID", -1);
         type = i.getStringExtra("type");
+        lat = i.getDoubleExtra("latitude", 0);
+        lon = i.getDoubleExtra("longitude", 0);
 
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
 
@@ -65,6 +68,25 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
         int duration = Toast.LENGTH_SHORT;
         Toast.makeText(getApplicationContext(), "LA: " + location.getLatitude() + " LO: " + location.getLongitude(), duration).show();
 
+        double curLat = location.getLatitude();
+        double curLon = location.getLongitude();
+
+        if (Math.abs(curLat - lat) <= 0.0001 || Math.abs(curLon - lon) <= 0.0001){
+            b.setText("Checked");
+        }
+
+        try {
+
+            Boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (isGPSEnabled) {
+
+                locationManager.removeUpdates(this);
+
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
 
     }
 

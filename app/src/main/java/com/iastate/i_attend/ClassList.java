@@ -19,9 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.common.math.DoubleMath;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +33,7 @@ public class ClassList extends AppCompatActivity {
     private ListView listView;
     private Toolbar toolbar;
     private EditText searchClass;
-    ArrayList<String> values = new ArrayList<String>(Arrays.asList("CPRE 388", "CPRE 491", "EE 230", "COMS 550", "ABC 120", "LIB 160"));
+    ArrayList<String> values = new ArrayList<String>(Arrays.asList("CPRE 388", "CPRE 491", "EE 230", "COMS 550", "ABC 120", "LIB 160", "CPRE 288"));
     ArrayList<String> filtered = values;
     HashMap<String,LatLng> latlngs = new HashMap<>();
 
@@ -70,6 +67,9 @@ public class ClassList extends AppCompatActivity {
 
         // Catt Hall.
         latlngs.put("CPRE 491", new LatLng(42.02789791107405,-93.64576578140259));
+
+        //Durham Hall.
+        latlngs.put("CPRE 288", new LatLng(42.027493, -93.649696));
 
         // Filter classes here.
         searchClass.addTextChangedListener(new TextWatcher() {
@@ -105,7 +105,7 @@ public class ClassList extends AppCompatActivity {
                 intent.putExtra("longitude",latlngs.get(text).longitude);
                 Log.d("Lat is ", Double.toString(latlngs.get(text).latitude));
                 Log.d("Lng is ", Double.toString(latlngs.get(text).longitude));
-//                startActivity(intent);
+                startActivity(intent);
             }
         });
     }
