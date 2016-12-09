@@ -40,6 +40,7 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
     @TargetApi(Build.VERSION_CODES.M)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_attendance_student);
 
         Intent i = getIntent();
         courseName = i.getStringExtra("courseName");
@@ -50,48 +51,59 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
         SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         gpsAllowed = SP.getBoolean("allowGpsUsage",false);
 
-        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
-        Log.d("GPS Usage Allowance", Boolean.toString(gpsAllowed));
+        if(!gpsAllowed){
+            findViewById(R.id.not_enabled).setVisibility(View.VISIBLE);
+            findViewById(R.id.courseName).setVisibility(View.INVISIBLE);
+            findViewById(R.id.check).setVisibility(View.INVISIBLE);
+            findViewById(R.id.location).setVisibility(View.INVISIBLE);
+        }else{
+            findViewById(R.id.not_enabled).setVisibility(View.INVISIBLE);
+            findViewById(R.id.courseName).setVisibility(View.VISIBLE);
+            findViewById(R.id.check).setVisibility(View.VISIBLE);
+            findViewById(R.id.location).setVisibility(View.VISIBLE);
+
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+            Log.d("GPS Usage Allowance", Boolean.toString(gpsAllowed));
 
 
-        setContentView(R.layout.activity_attendance_student);
-        ((TextView) findViewById(R.id.courseName)).setText(courseName);
+            ((TextView) findViewById(R.id.courseName)).setText(courseName);
 
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
-            Address obj = addresses.get(0);
-            String address = obj.getAddressLine(0);
-            ((TextView) findViewById(R.id.location)).setText(address);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-
-        // Acquire a reference to the system Location Manager
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-
-        b = (Button) findViewById(R.id.check);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                try {
-
-                    Boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-                    if (isGPSEnabled) {
-
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, AttendanceActivity.this);
-
-                    }
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                }
-
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            try {
+                List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
+                Address obj = addresses.get(0);
+                String address = obj.getAddressLine(0);
+                ((TextView) findViewById(R.id.location)).setText(address);
+            } catch (Exception e){
+                e.printStackTrace();
             }
-        });
+
+
+            // Acquire a reference to the system Location Manager
+            locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+
+            b = (Button) findViewById(R.id.check);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    try {
+
+                        Boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+                        if (isGPSEnabled) {
+
+                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, AttendanceActivity.this);
+
+                        }
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        }
     }
 
     @Override
