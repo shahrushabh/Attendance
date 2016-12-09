@@ -13,7 +13,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="68dp"
         android:id="@+id/courseName"
@@ -26,4 +25,13 @@
         android:id="@+id/check"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/check"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="62dp"
+        android:id="@+id/location" />
 </RelativeLayout>

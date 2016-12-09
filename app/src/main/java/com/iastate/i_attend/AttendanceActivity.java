@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,12 +18,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
+import java.util.Locale;
 
 
 public class AttendanceActivity extends AppCompatActivity implements LocationListener {
 
-    int courseID;
+    String courseName;
     String type;
     LocationManager locationManager;
     Button b;
@@ -36,7 +42,7 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
         super.onCreate(savedInstanceState);
 
         Intent i = getIntent();
-        courseID = i.getIntExtra("courseID", -1);
+        courseName = i.getStringExtra("courseName");
         type = i.getStringExtra("type");
         lat = i.getDoubleExtra("latitude", 0);
         lon = i.getDoubleExtra("longitude", 0);
@@ -49,6 +55,18 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
 
 
         setContentView(R.layout.activity_attendance_student);
+        ((TextView) findViewById(R.id.courseName)).setText(courseName);
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
+            Address obj = addresses.get(0);
+            String address = obj.getAddressLine(0);
+            ((TextView) findViewById(R.id.location)).setText(address);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);

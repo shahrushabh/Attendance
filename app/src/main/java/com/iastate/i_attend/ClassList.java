@@ -123,6 +123,7 @@ public class ClassList extends AppCompatActivity {
                     Toast.makeText(context, text, duration).show();
 
                     Intent intent = new Intent(ClassList.this, AttendanceActivity.class);
+                    intent.putExtra("courseName", filtered.get(i));
                     intent.putExtra("courseID", i);
                     intent.putExtra("username", username);
                     intent.putExtra("type", type);
