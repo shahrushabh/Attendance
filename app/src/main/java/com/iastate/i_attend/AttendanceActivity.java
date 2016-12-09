@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -83,8 +84,12 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
         double curLat = location.getLatitude();
         double curLon = location.getLongitude();
 
-        if (Math.abs(curLat - lat) <= 0.0001 || Math.abs(curLon - lon) <= 0.0001){
-            b.setText("Checked");
+        if (Math.abs(curLat - lat) <= 0.0005 || Math.abs(curLon - lon) <= 0.0005){
+            b.setText("Marked Attendance");
+            b.setBackgroundColor(Color.GREEN);
+        } else {
+            b.setText("Don't LIE!!");
+            b.setBackgroundColor(Color.RED);
         }
 
         try {
