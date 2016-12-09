@@ -17,6 +17,9 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
 
     private GoogleMap googleMap;
     private MarkerOptions markerOptions;
+    private String name;
+    private LatLng givenLatlng;
+    private boolean extraSet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,10 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        name = intent.getStringExtra("name");
+        givenLatlng = new LatLng(intent.getDoubleExtra("latitude",42.02821),intent.getDoubleExtra("longitude",-93.64892));
+        ((EditText) findViewById(R.id.courseName)).setText(name);
+
 
         (findViewById(R.id.complete)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +54,29 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap map) {
         googleMap = map;
+        googleMap.setMinZoomPreference(15.0f);
+        googleMap.setMaxZoomPreference(20.0f);
+        // Creating a marker
+        markerOptions = new MarkerOptions();
+
+        // Setting the position for the marker
+        markerOptions.position(givenLatlng);
+
+        // Setting the title for the marker.
+        // This will be displayed on taping the marker
+        markerOptions.title(givenLatlng.latitude + " : " + givenLatlng.longitude);
+
+        // Clears the previously touched position
+        googleMap.clear();
+
+        // Animating to the touched position
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(givenLatlng));
+
+        // Placing a marker on the touched position
+        googleMap.addMarker(markerOptions);
+
+        String l = "Lat " + Double.toString(givenLatlng.latitude) + " Lang " + Double.toString(givenLatlng.longitude);
+        ((EditText) findViewById(R.id.courseLocation)).setText(l);
 
         // Setting a click event handler for the map
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
