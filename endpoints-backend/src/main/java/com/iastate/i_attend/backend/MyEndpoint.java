@@ -9,11 +9,6 @@ package com.iastate.i_attend.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Query;
-
 import javax.inject.Named;
 
 /**
@@ -61,11 +56,11 @@ public class MyEndpoint {
     public User getUser(@Named("email") String email) {
 //        DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 //        Query userQuery = new Query("User");
-////        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, email);
-//        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, "rvshah@iastate.edu");
+//        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, email);
+////        Query.Filter emailFilter = new Query.FilterPredicate("email", Query.FilterOperator.EQUAL, "rvshah@iastate.edu");
 //        userQuery.setFilter(emailFilter);
 //        return dataStore.prepare(userQuery).asSingleEntity();
-        return new User(123, "Rushabh", "Student", "rvshah@iastate.edu");
+        return new User(123, "Rushabh", "Student", email);
     }
 
     /**
@@ -75,13 +70,7 @@ public class MyEndpoint {
             path = "addUser",
             httpMethod = ApiMethod.HttpMethod.POST)
     public void addUser(User user) {
-        DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-        Entity newUser = new Entity("User", user.getUserEmail());
-        newUser.setProperty("userName", user.getUserName());
-        newUser.setProperty("userType", user.getUserType());
-        newUser.setProperty("userEmail", user.getUserEmail());
-        newUser.setProperty("userClasses", user.getUserClasses());
-        dataStore.put(newUser);
+            user = new User(123, "Rushabh", "Student", "testing");
+//        return new User(123, "Rushabh", "Student", "testing");
     }
-
 }

@@ -22,9 +22,19 @@
         android:layout_alignParentStart="true"
         android:id="@+id/userStatus" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:text="No Courses Found"
+        android:id="@+id/no_item_error"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:layout_below="@id/userStatus"></ListView>
+        android:layout_below="@id/userStatus"/>
 </RelativeLayout>
