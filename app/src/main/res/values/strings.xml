@@ -2,4 +2,6 @@
     <string name="app_name">I-Attend</string>
     <string name="signed_in_fmt">Signed in as: %s</string>
     <string name="title_activity_class_list">ClassList</string>
+    <string name="student">I am a Student..</string>
+    <string name="instructor">I am a Instructor..</string>
 </resources>

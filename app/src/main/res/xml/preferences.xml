@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:title="GPS Usage"
+        android:defaultValue="false"
+        android:summary="Allow use of GPS for marking attendance?"
+        android:key="allowGpsUsage" />
+</PreferenceScreen>

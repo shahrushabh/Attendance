@@ -59,7 +59,7 @@ public class ClassList extends AppCompatActivity {
         latlngs.put("LIB 160", new LatLng(42.028129028547276,-93.64882349967957));
 
         // Coover.
-        latlngs.put("CPRE 388", new LatLng(42.028415931827865,-93.65097999572754));
+        latlngs.put("CPRE 388", new LatLng(42.028400, -93.651251));
 
         // State Gym.
         latlngs.put("EE 230", new LatLng(42.02466217822298,-93.65397334098816));
@@ -142,6 +142,11 @@ public class ClassList extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.search:
                 update_list(((EditText) findViewById(R.id.searchClass)).getText());
+                return true;
+
+            case R.id.settings:
+                Intent i = new Intent(this, AppSettingsActivity.class);
+                startActivity(i);
                 return true;
 
             default:

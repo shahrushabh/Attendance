@@ -4,15 +4,19 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 
 public class AttendanceActivity extends AppCompatActivity implements LocationListener {
 
@@ -21,6 +25,9 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
     LocationManager locationManager;
     Button b;
     Double lat, lon;
+
+    SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    boolean gpsAllowed = SP.getBoolean("allowGpsUsage",false);
 
     @Override
     @TargetApi(Build.VERSION_CODES.M)
@@ -34,6 +41,8 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
         lon = i.getDoubleExtra("longitude", 0);
 
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+        Log.d("GPS Usage Allowance", Boolean.toString(gpsAllowed));
+
 
         setContentView(R.layout.activity_attendance_student);
 
