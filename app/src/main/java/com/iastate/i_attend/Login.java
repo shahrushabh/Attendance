@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
         sharedPref = getSharedPreferences("MyPreference", Context.MODE_PRIVATE);
         if(sharedPref.getBoolean("auto_login", false)){
-            Intent intent = new Intent(this, ClassList.class);
+            Intent intent = new Intent(this, UserType.class);
             intent.putExtra("username", sharedPref.getString("username", "error"));
             intent.putExtra("email", sharedPref.getString("email", "error"));
             intent.putExtra("type", sharedPref.getString("type", "error"));
