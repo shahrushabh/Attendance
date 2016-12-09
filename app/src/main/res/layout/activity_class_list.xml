@@ -30,4 +30,5 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_class_list" />
+
 </android.support.design.widget.CoordinatorLayout>
