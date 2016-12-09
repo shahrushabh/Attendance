@@ -1,8 +1,11 @@
 package com.iastate.i_attend;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -62,9 +69,21 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
         // Setting the position for the marker
         markerOptions.position(givenLatlng);
 
-        // Setting the title for the marker.
-        // This will be displayed on taping the marker
-        markerOptions.title(givenLatlng.latitude + " : " + givenLatlng.longitude);
+        Geocoder geocoder = new Geocoder(AddCourse.this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(givenLatlng.latitude, givenLatlng.longitude, 1);
+            Address obj = addresses.get(0);
+            String address = obj.getAddressLine(0);
+            markerOptions.title(address);
+            ((EditText) findViewById(R.id.courseLocation)).setText(address);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            markerOptions.title(givenLatlng.latitude + " : " + givenLatlng.longitude);
+            String l = "Lat " + Double.toString(givenLatlng.latitude) + " Lang " + Double.toString(givenLatlng.longitude);
+            ((EditText) findViewById(R.id.courseLocation)).setText(l);
+            Log.e("Error ", e.toString());
+        }
 
         // Clears the previously touched position
         googleMap.clear();
@@ -74,9 +93,6 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
 
         // Placing a marker on the touched position
         googleMap.addMarker(markerOptions);
-
-        String l = "Lat " + Double.toString(givenLatlng.latitude) + " Lang " + Double.toString(givenLatlng.longitude);
-        ((EditText) findViewById(R.id.courseLocation)).setText(l);
 
         // Setting a click event handler for the map
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -90,9 +106,21 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
                 // Setting the position for the marker
                 markerOptions.position(latLng);
 
-                // Setting the title for the marker.
-                // This will be displayed on taping the marker
-                markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+                Geocoder geocoder = new Geocoder(AddCourse.this, Locale.getDefault());
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                    Address obj = addresses.get(0);
+                    String address = obj.getAddressLine(0);
+                    markerOptions.title(address);
+                    ((EditText) findViewById(R.id.courseLocation)).setText(address);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+                    String l = "Lat " + Double.toString(latLng.latitude) + " Lang " + Double.toString(latLng.longitude);
+                    ((EditText) findViewById(R.id.courseLocation)).setText(l);
+                    Log.e("Error ", e.toString());
+                }
 
                 // Clears the previously touched position
                 googleMap.clear();
@@ -102,9 +130,6 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
 
                 // Placing a marker on the touched position
                 googleMap.addMarker(markerOptions);
-
-                String l = "Lat " + Double.toString(latLng.latitude) + " Lang " + Double.toString(latLng.longitude);
-                ((EditText) findViewById(R.id.courseLocation)).setText(l);
             }
         });
 
