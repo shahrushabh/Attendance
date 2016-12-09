@@ -84,7 +84,7 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
         double curLat = location.getLatitude();
         double curLon = location.getLongitude();
 
-        if (Math.abs(curLat - lat) <= 0.0005 || Math.abs(curLon - lon) <= 0.0005){
+        if (Math.abs(curLat - lat) <= 0.0003 || Math.abs(curLon - lon) <= 0.0003){
             b.setText("Marked Attendance");
             b.setBackgroundColor(Color.GREEN);
         } else {
