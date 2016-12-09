@@ -26,8 +26,8 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
     Button b;
     Double lat, lon;
 
-    SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-    boolean gpsAllowed = SP.getBoolean("allowGpsUsage",false);
+    SharedPreferences SP;
+    boolean gpsAllowed;
 
     @Override
     @TargetApi(Build.VERSION_CODES.M)
@@ -39,6 +39,9 @@ public class AttendanceActivity extends AppCompatActivity implements LocationLis
         type = i.getStringExtra("type");
         lat = i.getDoubleExtra("latitude", 0);
         lon = i.getDoubleExtra("longitude", 0);
+
+        SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        gpsAllowed = SP.getBoolean("allowGpsUsage",false);
 
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
         Log.d("GPS Usage Allowance", Boolean.toString(gpsAllowed));
