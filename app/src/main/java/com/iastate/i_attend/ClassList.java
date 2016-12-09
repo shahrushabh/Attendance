@@ -3,6 +3,7 @@ package com.iastate.i_attend;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -33,6 +34,7 @@ public class ClassList extends AppCompatActivity {
     private ListView listView;
     private Toolbar toolbar;
     private EditText searchClass;
+    public static int REQUEST_CODE = 1;
     ArrayList<String> values = new ArrayList<String>(Arrays.asList("CPRE 388", "CPRE 491", "EE 230", "COMS 550", "ABC 120", "LIB 160", "CPRE 288"));
     ArrayList<String> filtered = values;
     HashMap<String,LatLng> latlngs = new HashMap<>();
@@ -71,6 +73,18 @@ public class ClassList extends AppCompatActivity {
         //Durham Hall.
         latlngs.put("CPRE 288", new LatLng(42.027493, -93.649696));
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ClassList.this, AddCourse.class);
+                startActivityForResult(i, REQUEST_CODE);
+            }
+        });
+        if(type.equals(UserType.TYPE_STUDENT)){
+            fab.setVisibility(View.INVISIBLE);
+        }
+
         // Filter classes here.
         searchClass.addTextChangedListener(new TextWatcher() {
             @Override
@@ -91,24 +105,54 @@ public class ClassList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //TODO: Update the action to lead the user to class detail (Attendance Activity)
-                Context context = getApplicationContext();
-                CharSequence text = filtered.get(i);
-                int duration = Toast.LENGTH_SHORT;
-                Toast.makeText(context, text, duration).show();
+                if(type.equals(UserType.TYPE_INSTRUCTOR)){
+                    Context context = getApplicationContext();
+                    CharSequence text = filtered.get(i);
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast.makeText(context, text, duration).show();
 
-                Intent intent = new Intent(ClassList.this, AttendanceActivity.class);
-                intent.putExtra("courseID", i);
-                intent.putExtra("username", username);
-                intent.putExtra("type", type);
-                intent.putExtra("email", email);
-                intent.putExtra("latitude",latlngs.get(text).latitude);
-                intent.putExtra("longitude",latlngs.get(text).longitude);
-                Log.d("Lat is ", Double.toString(latlngs.get(text).latitude));
-                Log.d("Lng is ", Double.toString(latlngs.get(text).longitude));
-                startActivity(intent);
+                    Intent intent = new Intent(ClassList.this, AddCourse.class);
+                    intent.putExtra("name", text);
+                    intent.putExtra("latitude",latlngs.get(text).latitude);
+                    intent.putExtra("longitude",latlngs.get(text).longitude);
+                    startActivityForResult(intent, REQUEST_CODE);
+                }else{
+                    Context context = getApplicationContext();
+                    CharSequence text = filtered.get(i);
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast.makeText(context, text, duration).show();
+
+                    Intent intent = new Intent(ClassList.this, AttendanceActivity.class);
+                    intent.putExtra("courseID", i);
+                    intent.putExtra("username", username);
+                    intent.putExtra("type", type);
+                    intent.putExtra("email", email);
+                    intent.putExtra("latitude",latlngs.get(text).latitude);
+                    intent.putExtra("longitude",latlngs.get(text).longitude);
+                    Log.d("Lat is ", Double.toString(latlngs.get(text).latitude));
+                    Log.d("Lng is ", Double.toString(latlngs.get(text).longitude));
+                    startActivity(intent);
+                }
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == REQUEST_CODE) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                Bundle b = data.getExtras();
+                String courseName = b.getString("courseName");
+                if(!values.contains(courseName)){
+                    values.add(courseName);
+                }
+                latlngs.put(courseName, new LatLng(b.getDouble("latitude"), b.getDouble("longitude")));
+            }
+        }
+    }
+
 
     private void update_list(CharSequence charSequence){
         String filter = charSequence.toString();

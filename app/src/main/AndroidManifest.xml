@@ -33,6 +33,8 @@
         <activity android:name=".CourseReg"/>
         <activity android:name=".AppSettingsActivity">
         </activity>
+        <activity android:name=".AddCourse">
+        </activity>
     </application>
 
 </manifest>
