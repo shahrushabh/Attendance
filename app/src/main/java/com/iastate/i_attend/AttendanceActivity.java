@@ -1,7 +1,11 @@
 package com.iastate.i_attend;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.icu.text.DateFormat;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.BoolRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +17,8 @@ public class AttendanceActivity extends AppCompatActivity {
     int courseID;
     String type;
     TextView courseName, count;
+    SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    boolean gpsAllowed = SP.getBoolean("allowGpsUsage",false);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +27,8 @@ public class AttendanceActivity extends AppCompatActivity {
         Intent i = getIntent();
         courseID = i.getIntExtra("courseID", -1);
         type = i.getStringExtra("type");
+
+        Log.d("GPS Usage Allowance", Boolean.toString(gpsAllowed));
 
         if (type.equals(UserType.TYPE_INSTRUCTOR)) {
             setContentView(R.layout.activity_attendance);

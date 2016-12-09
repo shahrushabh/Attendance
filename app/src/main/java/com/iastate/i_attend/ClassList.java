@@ -106,7 +106,7 @@ public class ClassList extends AppCompatActivity {
                 intent.putExtra("longitude",latlngs.get(text).longitude);
                 Log.d("Lat is ", Double.toString(latlngs.get(text).latitude));
                 Log.d("Lng is ", Double.toString(latlngs.get(text).longitude));
-//                startActivity(intent);
+                startActivity(intent);
             }
         });
     }
@@ -143,6 +143,11 @@ public class ClassList extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.search:
                 update_list(((EditText) findViewById(R.id.searchClass)).getText());
+                return true;
+
+            case R.id.settings:
+                Intent i = new Intent(this, AppSettingsActivity.class);
+                startActivity(i);
                 return true;
 
             default:
