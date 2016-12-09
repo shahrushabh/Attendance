@@ -2,7 +2,6 @@ package com.iastate.i_attend;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,9 +28,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.iastate.i_attend.backend.iAttend.IAttend;
+import com.iastate.i_attend.backend.iAttend.model.User;
 
 import org.json.JSONObject;
 
@@ -157,14 +155,14 @@ public class AddCourse extends AppCompatActivity implements OnMapReadyCallback{
             String name = params[0].second;
 
             try {
-//                return myApiService.sayHello().execute().getData();//getUser("rvshah@iastate.edu").execute().getKind();
-                com.iastate.i_attend.backend.iAttend.model.User user = myApiService.getUser("rvshah@iastate.edu").execute();
-                Log.d("Testing ", "It Works");
+//                com.iastate.i_attend.backend.iAttend.model.User user = myApiService.getUser("rvshah@iastate.edu").execute();
+//                Log.d("Testing ", "It Works");
 //                Log.d("Name is ", user.getUserName());
 //                Log.d("Email is ", user.getUserEmail());
 //                Log.d("Type is ", user.getUserType());
 //                return myApiService.getUser("rvshah@iastate.edu").execute().getUserType();//get_course().execute().getCourseName();
-                return myApiService.sayHello().execute().getData();//get_course().execute().getCourseName();
+                myApiService.addUser(new com.iastate.i_attend.backend.iAttend.model.User());
+                return myApiService.getUser("rvshah@iastate.edu").execute().getUserEmail();
             } catch (IOException e) {
                 return e.getMessage();
             }
