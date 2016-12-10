@@ -11,19 +11,34 @@
     tools:context="com.iastate.i_attend.AttendanceActivity">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Please enable GPS."
+        android:textSize="30sp"
+        android:gravity="center"
+        android:id="@+id/not_enabled"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="68dp"
         android:id="@+id/courseName"
         android:textSize="24sp" />
 
     <Button
-        android:text="Check"
+        android:text="Attend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/check"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/check"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="62dp"
+        android:id="@+id/location" />
 </RelativeLayout>
